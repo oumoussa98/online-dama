@@ -1,18 +1,19 @@
 		
 body
     min-height: 100vh
-    width: 100vw
+    min-width: 100vw
     display: flex
     justify-content: center
     align-items: center
     flex-direction: column
+    overflow: hidden
 			
 
     .game-board
         background: #666565
         border: 1px solid #666565
-        width: 120vmin
-        height: 90vmin
+        width: 100vmin
+        height: 80vmin
         display: grid
         position: absolute
         z-index: 1
@@ -27,17 +28,17 @@ body
             background: #474646
    
    
- 
-        .top 
+        
+        .player-1 
             position: absolute
-            width: 60px
-            height: 60px
+            margin: 3px 0 0 12px
+            width: 58px
+            height: 58px
             background: #0817e6
-            margin: 6px 0 0 20px
             border-radius: 50%
             box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.5)
             cursor: pointer
-
+       
         .row1col1 
             grid-area: 1/1
         .row1col3 
@@ -63,40 +64,46 @@ body
         .row3col7
             grid-area: 3/7
 
-        /* bottom */
-        .bottom 
+        /* player-2 */
+        .player-2 
             position: absolute
-            margin: 6px 0 0 20px
-            width: 60px
-            height: 60px
+            margin: 3px 0 0 12px
+            width: 58px
+            height: 58px
             background: #ee120a
             border-radius: 50%
             box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.5)
             cursor: pointer
 
-        .row6col1 
+        .row6col2
             grid-area: 6/2
-        .row6col3 
+        .row6col4
             grid-area: 6/4
-        .row6col5
+        .row6col6
             grid-area: 6/6
-        .row6col7
+        .row6col8
             grid-area: 6/8
-        .row7col2
+        .row7col1
             grid-area: 7/1
-        .row7col4
+        .row7col3
             grid-area: 7/3
-        .row7col6
+        .row7col5
             grid-area: 7/5
-        .row7col8
+        .row7col7
             grid-area: 7/7
-        .row8col1
+        .row8col2
             grid-area: 8/2
-        .row8col3
+        .row8col4
             grid-area: 8/4
-        .row8col5
+        .row8col6
             grid-area: 8/6
-        .row8col7
+        .row8col8
             grid-area: 8/8
         
+        .super-player-1
+            background: #5954f3;
+            background: radial-gradient(circle, #241df7 30%, #03176d 55%)
+        .super-player-2
+            background: #f14444
+            background: radial-gradient(circle, #f71717 30%, #6b0505 55%)
 
