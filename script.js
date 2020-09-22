@@ -178,6 +178,10 @@ const check_if_there_is_an_element_to_eat = (attr) => {
 	return false;
 };
 const can_eat_multiple = (player, attr) => {
+	let className = player.getAttribute("class");
+	let i = className.indexOf(" ");
+	className = className.slice(0, i);
+	player = document.querySelector("." + className);
 	let playerXY = player.getAttribute(attr);
 	if (attr === "data-player-1") {
 		let player_2 = document.querySelectorAll(".player-2");
@@ -216,6 +220,15 @@ const can_eat_multiple = (player, attr) => {
 		return false;
 	}
 	return false;
+};
+const eat_multiple = (monster, elToEat, newGridArea, monsterAttr) => {
+	eat(monster, elToEat, newGridArea, monsterAttr);
+	let { board, enemy, xy } = can_eat_multiple(monster, monsterAttr);
+	if (board && enemy && xy) {
+		board.onclick = (e) => {
+			eat_multiple(monster, enemy, xy, monsterAttr);
+		};
+	}
 };
 const can_move = (element, attr) => {
 	const elementXY = element.getAttribute(attr);
@@ -332,6 +345,24 @@ const player1 = () => {
 						activeXY = e.target.getAttribute("data-board");
 						if (activeXY === xy) {
 							eat(player, enemy, xy, "data-player-1");
+							let {
+								board,
+								enemy: enemy2,
+								xy: xy2,
+							} = can_eat_multiple(player, "data-player-1");
+							if (board && enemy2 && xy2) {
+								board.onclick = (e) => {
+									eat_multiple(
+										player,
+										enemy2,
+										xy2,
+										"data-player-1"
+									);
+									player2();
+								};
+								remove_event_listeners(".player-1");
+								player2();
+							}
 							remove_event_listeners(".active");
 							remove_event_listeners(".player-1");
 							player2(); // other player
@@ -424,6 +455,24 @@ const player2 = () => {
 						activeXY = e.target.getAttribute("data-board");
 						if (activeXY === xy) {
 							eat(player, enemy, xy, "data-player-2");
+							let {
+								board,
+								enemy: enemy2,
+								xy: xy2,
+							} = can_eat_multiple(player, "data-player-2");
+							if (board && enemy2 && xy2) {
+								board.onclick = (e) => {
+									eat_multiple(
+										player,
+										enemy2,
+										xy2,
+										"data-player-2"
+									);
+									player1();
+								};
+								remove_event_listeners(".player-2");
+								player1();
+							}
 							remove_event_listeners(".active");
 							remove_event_listeners(".player-2");
 							player1();
