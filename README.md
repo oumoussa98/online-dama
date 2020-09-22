@@ -1,1 +1,1 @@
-"# Dama is a famous moroccan game "
+# Dama is a famous moroccan game
