@@ -5,8 +5,7 @@
 const remove_event_listeners = (nodes) => {
 	nodes = document.querySelectorAll(nodes);
 	nodes.forEach((node) => {
-		let newNode = node.cloneNode();
-		node.parentNode.replaceChild(newNode, node);
+		node.onclick = () => null;
 	});
 };
 const eat = (monster, elToEat, newGridArea, monsterAttr) => {
@@ -225,7 +224,7 @@ const eat_multiple = (monster, elToEat, newGridArea, monsterAttr) => {
 	eat(monster, elToEat, newGridArea, monsterAttr);
 	let { board, enemy, xy } = can_eat_multiple(monster, monsterAttr);
 	if (board && enemy && xy) {
-		board.onclick = (e) => {
+		board.onclick = () => {
 			eat_multiple(monster, enemy, xy, monsterAttr);
 		};
 	}
@@ -351,7 +350,10 @@ const player1 = () => {
 								xy: xy2,
 							} = can_eat_multiple(player, "data-player-1");
 							if (board && enemy2 && xy2) {
-								board.onclick = (e) => {
+								remove_event_listeners(".active");
+								board.onclick = () => {
+									remove_event_listeners(".active");
+									remove_event_listeners(".player-1");
 									eat_multiple(
 										player,
 										enemy2,
@@ -361,11 +363,11 @@ const player1 = () => {
 									player2();
 								};
 								remove_event_listeners(".player-1");
-								player2();
+								return;
 							}
 							remove_event_listeners(".active");
 							remove_event_listeners(".player-1");
-							player2(); // other player
+							player2();
 							return;
 						}
 						let { elX, elY } = can_move(player, "data-player-1");
@@ -461,7 +463,10 @@ const player2 = () => {
 								xy: xy2,
 							} = can_eat_multiple(player, "data-player-2");
 							if (board && enemy2 && xy2) {
-								board.onclick = (e) => {
+								remove_event_listeners(".active");
+								board.onclick = () => {
+									remove_event_listeners(".player-2");
+									remove_event_listeners(".active");
 									eat_multiple(
 										player,
 										enemy2,
@@ -471,9 +476,8 @@ const player2 = () => {
 									player1();
 								};
 								remove_event_listeners(".player-2");
-								player1();
+								return;
 							}
-							remove_event_listeners(".active");
 							remove_event_listeners(".player-2");
 							player1();
 							return;
