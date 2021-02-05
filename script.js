@@ -326,6 +326,12 @@ const removeEl = (el) => {
 	el = document.querySelector("." + className);
 	el.remove();
 };
+// super player
+const is_super_player = (player) => {
+	if (player.getAttribute("class").includes("super-player")) return true;
+	return false;
+};
+
 const player1 = () => {
 	let player = null;
 	let playerXY = null;
@@ -334,6 +340,7 @@ const player1 = () => {
 	player_1.forEach((el) => {
 		el.onclick = (e) => {
 			player = e.target;
+			if (is_super_player(player)) console.log("super-player-1");
 			playerXY = e.target.getAttribute("data-player-1");
 			let player_2 = document.querySelectorAll(".player-2");
 			let { enemy, xy } = can_eat(playerXY, player_2, "data-player-2");
@@ -344,6 +351,9 @@ const player1 = () => {
 						activeXY = e.target.getAttribute("data-board");
 						if (activeXY === xy) {
 							eat(player, enemy, xy, "data-player-1");
+							if (xy[0] == 8) {
+								player.classList.add("super-player-1");
+							}
 							let {
 								board,
 								enemy: enemy2,
@@ -360,6 +370,9 @@ const player1 = () => {
 										xy2,
 										"data-player-1"
 									);
+									if (xy2[0] == 8) {
+										player.classList.add("super-player-1");
+									}
 									player2();
 								};
 								remove_event_listeners(".player-1");
@@ -422,6 +435,9 @@ const player1 = () => {
 								}, 250);
 							}
 							move(player, activeXY, "data-player-1");
+							if (activeXY[0] == 8) {
+								player.classList.add("super-player-1");
+							}
 							remove_event_listeners(".active");
 							remove_event_listeners(".player-1");
 							player2();
@@ -447,6 +463,7 @@ const player2 = () => {
 	player_2.forEach((el) => {
 		el.onclick = (e) => {
 			player = e.target;
+			if (is_super_player(player)) console.log("super-player-2");
 			playerXY = e.target.getAttribute("data-player-2");
 			let player_1 = document.querySelectorAll(".player-1");
 			let { enemy, xy } = can_eat(playerXY, player_1, "data-player-1");
@@ -457,6 +474,9 @@ const player2 = () => {
 						activeXY = e.target.getAttribute("data-board");
 						if (activeXY === xy) {
 							eat(player, enemy, xy, "data-player-2");
+							if (xy[0] == 1) {
+								player.classList.add("super-player-2");
+							}
 							let {
 								board,
 								enemy: enemy2,
@@ -473,6 +493,9 @@ const player2 = () => {
 										xy2,
 										"data-player-2"
 									);
+									if (xy2[0] == 1) {
+										player.classList.add("super-player-2");
+									}
 									player1();
 								};
 								remove_event_listeners(".player-2");
@@ -534,6 +557,9 @@ const player2 = () => {
 								}, 250);
 							}
 							move(player, activeXY, "data-player-2");
+							if (activeXY[0] == 1) {
+								player.classList.add("super-player-2");
+							}
 							remove_event_listeners(".active");
 							remove_event_listeners(".player-2");
 							player1();
@@ -551,6 +577,7 @@ const player2 = () => {
 		};
 	});
 };
+
 // start playing with player 1
 player1();
 
@@ -558,14 +585,14 @@ player1();
  * testing
  */
 
-// test for can_move function
+// test can_move function
 // test_can_move();
 
-// test for can_eat function
+// test can_eat function
 //test_can_eat();
 
-// test for can_eat_multiple function
+// test can_eat_multiple function
 // test_can_eat_multiple();
 
-// test for check_if_tere_is_an_elemnt_to_eat function
+// test check_if_tere_is_an_elemnt_to_eat function
 // test_check_if_there_is_an_element_to_eat();
